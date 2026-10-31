@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>Iris AI · Flower Classifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-mark">✿</span><span>Iris<span class="brand-ai">AI</span></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <a class="nav-item active" href="/"><span>⌂</span> Overview</a>
+      <div class="side-label model-label">MODEL</div>
+      <div class="model-chip"><span class="status-dot"></span><span><b>my_model.h5</b><small>Neural network · Loaded</small></span></div>
+      <div class="sidebar-bottom"><div class="mini-flower">✿</div><p>Small measurements.<br><b>Smart predictions.</b></p><span class="version">IRIS CLASSIFIER · V1.0</span></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <b>Overview</b></div><div class="top-right"><span class="live-pill"><i></i> MODEL ONLINE</span><div class="avatar">IA</div></div></header>
+
+      <section class="welcome"><div><div class="eyebrow"><span class="sparkle">✦</span> MACHINE LEARNING WORKSPACE</div><h1>Discover the <em>species.</em></h1><p class="subtitle">Enter flower measurements and let your trained neural network identify the Iris species.</p></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="flower-core">✿</div><span class="petal p1"></span><span class="petal p2"></span><span class="petal p3"></span><span class="petal p4"></span></div></section>
+
+      <section class="stats-grid">
+        <article class="stat-card"><div class="stat-icon purple">⌘</div><div><span>MODEL TYPE</span><strong>Sequential ANN</strong><small>Dense neural network</small></div></article>
+        <article class="stat-card"><div class="stat-icon blue">↳</div><div><span>INPUT FEATURES</span><strong>04</strong><small>Flower measurements</small></div></article>
+        <article class="stat-card"><div class="stat-icon pink">◎</div><div><span>OUTPUT CLASSES</span><strong>03</strong><small>Iris species</small></div></article>
+        <article class="stat-card"><div class="stat-icon green">⌁</div><div><span>MODEL STATUS</span><strong class="ready">Ready</strong><small>Serving predictions locally</small></div></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel input-panel">
+          <div class="panel-heading"><div><div class="section-kicker">PREDICTION INPUT</div><h2>Flower measurements</h2><p>All values should be in centimeters (cm).</p></div><span class="step-badge">01 <span>/ 02</span></span></div>
+          <form id="prediction-form">
+            <div class="field-grid">
+              <label class="field"><span>Sepal length <small>cm</small></span><div class="input-wrap"><input type="number" id="sepal_length" name="sepal_length" min="0.1" max="10" step="0.1" value="5.1" required><span>cm</span></div><small class="hint">Length of the sepal</small></label>
+              <label class="field"><span>Sepal width <small>cm</small></span><div class="input-wrap"><input type="number" id="sepal_width" name="sepal_width" min="0.1" max="10" step="0.1" value="3.5" required><span>cm</span></div><small class="hint">Width of the sepal</small></label>
+              <label class="field"><span>Petal length <small>cm</small></span><div class="input-wrap"><input type="number" id="petal_length" name="petal_length" min="0.1" max="10" step="0.1" value="1.4" required><span>cm</span></div><small class="hint">Length of the petal</small></label>
+              <label class="field"><span>Petal width <small>cm</small></span><div class="input-wrap"><input type="number" id="petal_width" name="petal_width" min="0.1" max="10" step="0.1" value="0.2" required><span>cm</span></div><small class="hint">Width of the petal</small></label>
+            </div>
+            <div class="form-actions"><button type="button" class="reset-btn" id="reset-btn">↺ <span>Reset</span></button><button type="submit" class="predict-btn" id="predict-btn"><span>Predict species</span><b>→</b></button></div>
+            <p class="form-error" id="form-error" role="alert"></p>
+          </form>
+          <div class="input-note"><span>ⓘ</span> Use measurements from the same units and preprocessing used when training your model.</div>
+        </article>
+
+        <article class="panel result-panel" id="result-panel">
+          <div class="panel-heading"><div><div class="section-kicker">MODEL OUTPUT</div><h2>Prediction result</h2><p>Your model's classification will appear here.</p></div><span class="result-icon">✧</span></div>
+          <div class="empty-state" id="empty-state"><div class="empty-illustration"><span>✿</span><i></i><b></b></div><strong>Waiting for your input</strong><p>Fill in the four measurements<br>and run your first prediction.</p></div>
+          <div class="prediction-result hidden" id="prediction-result">
+            <div class="winner-label">MOST LIKELY SPECIES</div><div class="winner-name" id="winner-name">Iris setosa</div><div class="confidence-line"><span>Model confidence</span><b id="confidence-value">98.4%</b></div><div class="confidence-track"><span id="confidence-fill"></span></div>
+            <div class="probability-title">CLASS PROBABILITIES <span>SOFTMAX OUTPUT</span></div><div id="probability-list" class="probability-list"></div>
+            <div class="success-note"><span>✓</span> Prediction generated by your uploaded H5 model.</div>
+          </div>
+        </article>
+      </section>
+      <footer><span>✿ IrisAI</span><span>Powered by your trained Keras model <i>·</i> Results depend on training data and preprocessing.</span></footer>
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
